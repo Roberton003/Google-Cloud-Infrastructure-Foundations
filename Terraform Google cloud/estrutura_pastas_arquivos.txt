@@ -1,0 +1,34 @@
+main.tf
+variables.tf
+modules/
+└── instances
+    ├── instances.tf
+    ├── outputs.tf
+    └── variables.tf
+└── storage
+    ├── storage.tf
+    ├── outputs.tf
+    └── variables.tf
+
+    Setup: arquivos de configuração
+    
+Criar os arquivos e diretórios vazios no Cloud Shell.
+
+Tarefa 1
+
+toque em main.tf
+variáveis ​​de toque.tf
+módulos mkdir
+módulos de cd
+instâncias mkdir
+instâncias de cd
+toque instâncias.tf
+saídas de toque.tf
+variáveis ​​de toque.tf
+cd ..
+armazenamento mkdir
+armazenamento de cd
+toque em storage.tf
+saídas de toque.tf
+variáveis ​​de toque.tf
+cd

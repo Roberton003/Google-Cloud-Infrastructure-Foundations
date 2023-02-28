@@ -1,0 +1,25 @@
+Atividade 7
+Adicione o seguinte recurso ao arquivo main.tf e preencha o ID do projeto GCP:
+
+------------------------------------------------------------------------
+resource "google_compute_firewall" "tf-firewall" {
+  name    = "tf-firewall"
+ network = "projects/<PROJECT_ID>/global/networks/VPC_NAME"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["80"]
+  }
+
+  source_tags = ["web"]
+  source_ranges = ["0.0.0.0/0"]
+}
+
+
+
+Execute os comandos abaixo para configurar o firewall. 
+Digite yes no prompt.
+
+terraform init
+terraform apply
+

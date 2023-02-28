@@ -1,0 +1,84 @@
+atividade 6
+Copie e cole o código abaixo no arquivo main.tf:
+-------------------------------------------
+
+module "vpc" {
+    source  = "terraform-google-modules/network/google"
+    version = "~> 6.0.0"
+
+    project_id   = var.project_id
+    network_name = "VPC_NAME"
+    routing_mode = "GLOBAL"
+
+    subnets = [
+        {
+            subnet_name           = "subnet-01"
+            subnet_ip             = "10.10.10.0/24"
+            subnet_region         = "us-central1"
+        },
+        {
+            subnet_name           = "subnet-02"
+            subnet_ip             = "10.10.20.0/24"
+            subnet_region         = "us-central1"
+            subnet_private_access = "true"
+            subnet_flow_logs      = "true"
+            description           = "This subnet has a description"
+        }
+    ]
+}
+
+
+Execute os comandos abaixo para inicializar o módulo e criar a VPC. 
+Digite yes no prompt.
+----------------------------
+terraform init
+terraform apply
+
+
+
+
+Vá até modules/instances/instances.tf. Substitua todo o conteúdo do arquivo pelo código abaixo:
+
+resource "google_compute_instance" "tf-instance-1" {
+  name         = "tf-instance-1"
+  machine_type = "n1-standard-2"
+  zone         = var.zone
+  allow_stopping_for_update = true
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-11"
+    }
+  }
+
+  network_interface {
+ network = "VPC_NAME"
+    subnetwork = "subnet-01"
+  }
+}
+
+resource "google_compute_instance" "tf-instance-2" {
+  name         = "tf-instance-2"
+  machine_type = "n1-standard-2"
+  zone         = var.zone
+  allow_stopping_for_update = true
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-11"
+    }
+  }
+
+  network_interface {
+ network = "VPC_NAME"
+    subnetwork = "subnet-02"
+  }
+}
+
+
+
+Execute os comandos abaixo para inicializar o módulo e atualizar as instâncias.
+ Digite yes no prompt.
+--------------------------------------
+terraform init
+terraform apply

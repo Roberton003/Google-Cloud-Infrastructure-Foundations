@@ -1,0 +1,41 @@
+atividade 5
+No terminal execute o código abaixo:
+------------
+terraform taint module.instances.google_compute_instance.tf-instance-3
+
+
+
+Execute os comandos baixo para aplicar as alterações:
+------------------------------------------------------
+terraform init
+terraform apply
+
+
+
+Ao concluir essa etapa
+Remova a parte do recurso tf-instance-3 do arquivo instances.tf. 
+Exclua o seguinte pedaço de código do arquivo.
+
+----------------------------------------------
+resource "google_compute_instance" "tf-instance-3" {
+  name         = "INSTANCE NAME"
+  machine_type = "n1-standard-2"
+  zone         = var.zone
+  allow_stopping_for_update = true
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-10"
+    }
+  }
+
+  network_interface {
+ network = "default"
+  }
+}
+
+
+
+Execute os seguintes comando abaixo para aplicar as alterações. Digite yes no prompt.
+
+terraform apply
