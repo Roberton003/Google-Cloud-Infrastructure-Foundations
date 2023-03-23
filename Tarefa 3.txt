@@ -69,7 +69,7 @@ Tarefa 3 g:
 
 gcloud compute backend-services add-backend web-server-backend \
           --instance-group web-server-group \
-          --instance-group-region us-east1 \
+          --instance-group-region us-west4 \
           --global
       
 
