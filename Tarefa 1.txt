@@ -1,0 +1,18 @@
+Tarefa 1.
+Crie uma nova instância no Console do Cloud
+
+No Cloud Console, no menu Navigation ( Ícone do menu de navegação), clique em Compute Engine > VM Instances .
+
+Isso pode levar um minuto para inicializar pela primeira vez.
+
+Para criar uma nova instância, clique em CRIAR INSTÂNCIA .
+
+Tarefa 1. 
+Criar uma instância jumphost do projeto
+Você usará esta instância para executar a manutenção do projeto.
+
+Requisitos:
+
+Nomeie a instância "Nome da instância"
+Use um tipo de máquina f1-micro .
+Use o tipo de imagem padrão (Debian Linux).

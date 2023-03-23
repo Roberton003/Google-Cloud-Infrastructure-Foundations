@@ -1,0 +1,29 @@
+Tarefa 2. 
+Criar um cluster de serviço Kubernetes
+
+Clique em Ativar Cloud Shell Ative o ícone do Cloud Shell na parte superior do console do Google Cloud.
+
+Tarefa 2 a: Crie um cluster zonal usando<preenchido no início do laboratório>.
+
+gcloud container clusters create nucleus-backend \
+          --num-nodes 1 \
+          --network nucleus-vpc \
+          --region us-west4
+          
+          
+gcloud container clusters get-credentials nucleus-backend \
+          --region us-west4
+      
+
+Task 2 b: Use o hello-app do contêiner do Docker ( gcr.io/google-samples/hello-app:2.0) como um espaço reservado;
+ a equipe substituirá o contêiner por seu próprio trabalho posteriormente.
+
+kubectl create deployment hello-server \
+          --image=gcr.io/google-samples/hello-app:2.0
+      
+
+Task 2 c: Expor o aplicativo na portaNúmero da porta do aplicativo
+
+kubectl expose deployment hello-server \
+          --type=LoadBalancer \
+          --port 8081

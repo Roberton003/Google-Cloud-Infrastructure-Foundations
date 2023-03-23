@@ -1,0 +1,98 @@
+Tarefa 3.
+Configurar um balanceador de carga HTTP
+
+Tarefa 3 a: código para configurar os servidores web
+
+cat << EOF > startup.sh
+#! /bin/bash
+apt-get update
+apt-get install -y nginx
+service nginx start
+sed -i -- 's/nginx/Google Cloud Platform - '"\$HOSTNAME"'/' /var/www/html/index.nginx-debian.html
+EOF
+
+Tarefa 3 b:
+
+Crie um modelo de instância
+
+gcloud compute instance-templates create web-server-template \
+          --metadata-from-file startup-script=startup.sh \
+          --network nucleus-vpc \
+          --machine-type g1-small \
+          --region us-west4
+      
+
+
+Tarefa 3 c:
+
+Crie um grupo de instâncias gerenciadas.
+
+gcloud compute instance-groups managed create web-server-group \
+          --base-instance-name web-server \
+          --size 2 \
+          --template web-server-template \
+          --region us-west4
+      
+
+
+Tarefa 3 d:
+
+
+Crie uma regra de firewall chamada comoregra de firewall para permitir o tráfego (80/tcp).
+
+gcloud compute firewall-rules create accept-tcp-rule-876 \
+          --allow tcp:80 \
+          --network nucleus-vpc
+      
+
+
+Tarefa 3 e:
+
+gcloud compute http-health-checks create http-basic-check
+gcloud compute instance-groups managed \
+          set-named-ports web-server-group \
+          --named-ports http:80 \
+          --region us-west4
+      
+
+
+Tarefa 3 f:
+
+gcloud compute backend-services create web-server-backend \
+          --protocol HTTP \
+          --http-health-checks http-basic-check \
+          --global
+      
+
+
+Tarefa 3 g:
+
+gcloud compute backend-services add-backend web-server-backend \
+          --instance-group web-server-group \
+          --instance-group-region us-east1 \
+          --global
+      
+
+Task 3 h:
+
+gcloud compute url-maps create web-server-map \
+          --default-service web-server-backend
+      
+
+
+Tarefa 3 i:
+
+gcloud compute target-http-proxies create http-lb-proxy \
+          --url-map web-server-map
+      
+
+Tarefa 3 j:
+
+
+
+gcloud compute forwarding-rules create http-content-rule \
+        --global \
+        --target-http-proxy http-lb-proxy \
+        --ports 80
+gcloud compute forwarding-rules list
+      
